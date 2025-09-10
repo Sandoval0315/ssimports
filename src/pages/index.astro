@@ -1,7 +1,12 @@
 ---
 import MainLayout from "../layouts/MainLoyout.astro";
+import Navbar from "../components/Navbar/Navbar.jsx";
+import Hero from "../components/Hero/Hero.jsx";
+import Footer from "../components/Footer/Footer.jsx";
 ---
 
 <MainLayout>
-  <h1>ssimports</h1>
+  <Navbar client:load />
+  <Hero client:load />
+  <Footer client:load/>
 </MainLayout>
