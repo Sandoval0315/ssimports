@@ -6,7 +6,7 @@ const Hero = () => {
     <section className="hero">
       <div className="hero__content">
         <h1 className="hero__title">Welcome to SS Imports</h1>
-        <p className="hero__subtitle">Your gateway to quality products</p>
+        <p className="hero__subtitle">Pages in construction</p>
       </div>
     </section>
   );

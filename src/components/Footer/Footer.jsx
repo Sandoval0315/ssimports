@@ -49,9 +49,7 @@ const Footer = () => {
       <div className="footer__top" ref={topRef}>
         <div className="footer__contact">
           <span>Contact us: </span>
-          <a href="mailto:ssimport@pages.com" className="footer__email">
-            ssimport@pages.com
-          </a>
+          <span className='footer__email'>&nbsp;ssimport@pages.com</span>
         </div>
         
         <div className="footer__nav">
