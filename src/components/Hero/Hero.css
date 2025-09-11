@@ -4,23 +4,137 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   background-color: #E4E4E4;
-}
-
-.hero__content {
-  max-width: 600px;
   padding: 2rem;
 }
 
-.hero__title {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+.hero__content {
+  max-width: 1400px;
+  width: 100%;
 }
 
-.hero__subtitle {
-  font-size: 1.25rem;
-  font-weight: 400;
+.hero__car1 {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Contenido principal - Imagen y texto lado a lado */
+.hero__main-content {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  justify-content: flex-start;
+}
+
+.hero__text-content {
+  flex: 0 0 300px;
+  text-align: left;
+}
+
+.hero__car1-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #333;
+  line-height: 1.2;
+}
+
+.hero__car1-description {
+  font-size: 1rem;
+  line-height: 1.6;
   color: #555;
+  margin: 0;
+}
+
+.hero__main-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero__main-image img {
+  width: auto;
+  height: auto;
+}
+
+/* Galería de imágenes debajo */
+.hero__gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.hero__gallery-images {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.hero__gallery-image {
+  width: auto;
+  height: auto;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.hero__gallery-image:hover {
+  transform: scale(1.05);
+}
+
+.hero__gallery-arrow {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+}
+
+.hero__gallery-arrow:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    padding: 1rem;
+  }
+  
+  .hero__main-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .hero__text-content {
+    text-align: center;
+    flex: none;
+  }
+  
+  .hero__car1-title {
+    font-size: 2rem;
+  }
+  
+  .hero__car1-description {
+    font-size: 0.9rem;
+  }
+  
+  .hero__gallery {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .hero__gallery-images {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__car1-title {
+    font-size: 1.8rem;
+  }
+  
+  .hero__gallery-arrow {
+    display: none;
+  }
 }
