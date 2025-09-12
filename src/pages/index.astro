@@ -3,10 +3,12 @@ import MainLayout from "../layouts/MainLoyout.astro";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import Hero from "../components/Hero/Hero.jsx";
 import Footer from "../components/Footer/Footer.jsx";
+import Contact from "../components/Contact/Contact.jsx";
 ---
 
 <MainLayout>
   <Navbar client:load />
   <Hero client:load />
+  <Contact client:load />
   <Footer client:load/>
 </MainLayout>
