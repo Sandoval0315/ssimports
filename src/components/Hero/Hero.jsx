@@ -1,37 +1,141 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { gsap } from 'gsap/dist/gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import './Hero.css';
 
+// Registrar ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
 const Hero = () => {
   const heroRef = useRef(null);
-  const mainImageRef = useRef(null);
+  const ferrari288Ref = useRef(null);
+  const porsche918Ref = useRef(null);
+  const ferrariImageRef = useRef(null);
+  const porscheImageRef = useRef(null);
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const cardRef = useRef(null);
   const galleryRef = useRef(null);
+  const porscheTitleRef = useRef(null);
+  const porscheDescriptionRef = useRef(null);
+  const porscheCardRef = useRef(null);
+  const porscheGalleryRef = useRef(null);
 
-  // Framer Motion hooks para parallax
+  // Framer Motion hooks para parallax SUAVE (sin rotar imágenes)
   const { scrollYProgress } = useScroll();
-  const carY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const carRotate = useTransform(scrollYProgress, [0, 1], [0, 5]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const cardY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  
+  // Solo parallax Y para texto y cards - NO para imágenes
+  const ferrariTextY = useTransform(scrollYProgress, [0, 0.5], [0, -30]);
+  const ferrariCardY = useTransform(scrollYProgress, [0, 0.5], [0, -20]);
+  
+  const porscheTextY = useTransform(scrollYProgress, [0.4, 1], [0, -30]);
+  const porscheCardY = useTransform(scrollYProgress, [0.4, 1], [0, -20]);
 
   // Para detectar si está en vista
-  const isInView = useInView(heroRef, { once: true });
+  const ferrariInView = useInView(ferrari288Ref, { once: true, amount: 0.3 });
+  const porscheInView = useInView(porsche918Ref, { once: true, amount: 0.3 });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animación inicial sutil con GSAP
-      const tl = gsap.timeline({ delay: 0.2 });
-      
-      tl.from(galleryRef.current, {
+      // Efectos de sombra en scroll para las imágenes principales
+      gsap.to(ferrariImageRef.current, {
+        filter: "drop-shadow(0 25px 50px rgba(0, 0, 0, 0.3))",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ferrari288Ref.current,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1
+        }
+      });
+
+      gsap.to(porscheImageRef.current, {
+        filter: "drop-shadow(0 25px 50px rgba(0, 0, 0, 0.3))",
+        ease: "none",
+        scrollTrigger: {
+          trigger: porsche918Ref.current,
+          start: "top center", 
+          end: "bottom center",
+          scrub: 1
+        }
+      });
+
+      // Efecto de flotación sutil en las imágenes principales
+      gsap.to(ferrariImageRef.current, {
+        y: -10,
+        duration: 3,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+
+      gsap.to(porscheImageRef.current, {
+        y: -8,
+        duration: 2.5,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1,
+        delay: 1
+      });
+
+      // Animaciones de entrada para galerías
+      gsap.from(galleryRef.current, {
         y: 50,
         opacity: 0,
         duration: 1,
-        ease: "power3.out"
+        ease: "power3.out",
+        delay: 0.2
+      });
+
+      gsap.from(porscheGalleryRef.current, {
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: porsche918Ref.current,
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Parallax suave para imágenes de galería
+      gsap.to(".hero__gallery-image", {
+        yPercent: -10,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero__gallery",
+          start: "top bottom",
+          end: "bottom top", 
+          scrub: 2
+        }
+      });
+
+      // Efecto de escalado en hover para cards
+      const cards = document.querySelectorAll('.hero__side-card');
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, {
+            scale: 1.02,
+            y: -5,
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            scale: 1,
+            y: 0,
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
       });
 
     }, heroRef);
@@ -42,15 +146,15 @@ const Hero = () => {
   return (
     <section className="hero" ref={heroRef}>
       <div className="hero__content">
-        <div className='hero__car1'>
-          {/* Contenido principal reorganizado */}
+        {/* Ferrari 288 GTO Section */}
+        <div className='hero__car-section hero__ferrari' ref={ferrari288Ref}>
           <div className="hero__main-content">
             {/* Texto a la izquierda */}
             <motion.div 
               className="hero__text-content"
-              style={{ y: textY }}
+              style={{ y: ferrariTextY }}
               initial={{ x: -100, opacity: 0 }}
-              animate={isInView ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
+              animate={ferrariInView ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
               transition={{ 
                 duration: 1.2, 
                 delay: 0.2,
@@ -59,19 +163,19 @@ const Hero = () => {
               }}
             >
               <motion.p 
-                className='hero__car1-title' 
+                className='hero__car-title' 
                 ref={titleRef}
                 initial={{ y: 30, opacity: 0 }}
-                animate={isInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                animate={ferrariInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 Ferrari 288 GTO
               </motion.p>
               <motion.p 
-                className='hero__car1-description' 
+                className='hero__car-description' 
                 ref={descriptionRef}
                 initial={{ y: 20, opacity: 0 }}
-                animate={isInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+                animate={ferrariInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
                 Unveiled in 1984, stands as one of the brand's most iconic models. 
@@ -83,61 +187,34 @@ const Hero = () => {
               </motion.p>
             </motion.div>
                        
-            {/* Imagen del carro completamente centrada */}
-            <motion.div 
-              className="hero__main-image" 
-              ref={mainImageRef}
-              style={{ 
-                y: carY, 
-                rotate: carRotate 
-              }}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-              transition={{ 
-                duration: 1.5, 
-                delay: 0.8,
-                type: "spring",
-                stiffness: 80
-              }}
-              whileHover={{ 
-                scale: 1.05,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <motion.img 
+            {/* Imagen del carro - SIN MOTION para evitar rotación */}
+            <div className="hero__main-image">
+              <img 
+                ref={ferrariImageRef}
                 src="/images/car1.png" 
                 alt="Ferrari 288 GTO main view"
-                whileHover={{ 
-                  filter: "drop-shadow(0 20px 40px rgba(0, 0, 0, 0.25))",
-                  transition: { duration: 0.3 }
-                }}
               />
-            </motion.div>
+            </div>
 
             {/* Card de especificaciones a la derecha */}
             <motion.div 
               className="hero__side-card hero__side-card--right" 
               ref={cardRef}
-              style={{ y: cardY }}
+              style={{ y: ferrariCardY }}
               initial={{ x: 100, opacity: 0 }}
-              animate={isInView ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
+              animate={ferrariInView ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
               transition={{ 
                 duration: 1.2, 
                 delay: 0.4,
                 type: "spring",
                 stiffness: 100
               }}
-              whileHover={{ 
-                y: -5,
-                boxShadow: "0 15px 30px rgba(0, 0, 0, 0.15)",
-                transition: { duration: 0.3 }
-              }}
             >
               <div className="hero__card-content">
                 <motion.h3 
                   className="hero__card-title"
                   initial={{ y: 10, opacity: 0 }}
-                  animate={isInView ? { y: 0, opacity: 1 } : { y: 10, opacity: 0 }}
+                  animate={ferrariInView ? { y: 0, opacity: 1 } : { y: 10, opacity: 0 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
                 >
                   Especificaciones
@@ -153,12 +230,8 @@ const Hero = () => {
                       key={spec.label}
                       className="hero__spec"
                       initial={{ x: 20, opacity: 0 }}
-                      animate={isInView ? { x: 0, opacity: 1 } : { x: 20, opacity: 0 }}
+                      animate={ferrariInView ? { x: 0, opacity: 1 } : { x: 20, opacity: 0 }}
                       transition={{ duration: 0.5, delay: 1 + (index * 0.1) }}
-                      whileHover={{ 
-                        x: 5,
-                        transition: { duration: 0.2 }
-                      }}
                     >
                       <span className="hero__spec-label">{spec.label}</span>
                       <span className="hero__spec-value">{spec.value}</span>
@@ -169,14 +242,126 @@ const Hero = () => {
             </motion.div>
           </div>
            
-          {/* Galería de imágenes con controles (sin cambios) */}
+          {/* Galería de imágenes Ferrari */}
           <div className="hero__gallery" ref={galleryRef}>
             <ChevronLeft size={55} color='black' className="hero__gallery-arrow hero__gallery-arrow--left" />
                        
             <div className="hero__gallery-images">
               <img src="/images/car1view2.png" alt="Ferrari 288 GTO view 2" className="hero__gallery-image" />
-              <img src="/images/car1view1.png" alt="Ferrari 288 GTO view 1" className="hero__gallery-image" />
+              <img src="/images/car1mini.png" alt="Ferrari 288 GTO view 1" className="hero__gallery-image" />
               <img src="/images/car1view3.png" alt="Ferrari 288 GTO view 3" className="hero__gallery-image" />
+            </div>
+                       
+            <ChevronRight size={55} color='black' className="hero__gallery-arrow hero__gallery-arrow--right" />
+          </div>
+        </div>
+
+        {/* Porsche 918 Spyder Section */}
+        <div className='hero__car-section hero__porsche' ref={porsche918Ref}>
+          <div className="hero__main-content">
+            {/* Texto a la izquierda */}
+            <motion.div 
+              className="hero__text-content"
+              style={{ y: porscheTextY }}
+              initial={{ x: -100, opacity: 0 }}
+              animate={porscheInView ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
+              transition={{ 
+                duration: 1.2, 
+                delay: 0.2,
+                type: "spring",
+                stiffness: 100
+              }}
+            >
+              <motion.p 
+                className='hero__car-title' 
+                ref={porscheTitleRef}
+                initial={{ y: 30, opacity: 0 }}
+                animate={porscheInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                Porsche 918 Spyder
+              </motion.p>
+              <motion.p 
+                className='hero__car-description' 
+                ref={porscheDescriptionRef}
+                initial={{ y: 20, opacity: 0 }}
+                animate={porscheInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                A revolutionary hybrid supercar that redefined performance boundaries. 
+                Combining a naturally aspirated 4.6-liter V8 with two electric motors, 
+                it delivers a staggering 887 horsepower. This technological masterpiece 
+                accelerates from 0 to 100 km/h in just 2.6 seconds, while achieving 
+                the legendary sub-7-minute Nürburgring lap time, cementing its place 
+                in automotive history.
+              </motion.p>
+            </motion.div>
+                       
+            {/* Imagen del Porsche - SIN MOTION para evitar rotación */}
+            <div className="hero__main-image">
+              <img 
+                ref={porscheImageRef}
+                src="/images/car2.png" 
+                alt="Porsche 918 Spyder main view"
+              />
+            </div>
+
+            {/* Card de especificaciones a la derecha */}
+            <motion.div 
+              className="hero__side-card hero__side-card--right" 
+              ref={porscheCardRef}
+              style={{ 
+                y: porscheCardY,
+              }}
+              initial={{ x: 100, opacity: 0 }}
+              animate={porscheInView ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
+              transition={{ 
+                duration: 1.2, 
+                delay: 0.4,
+                type: "spring",
+                stiffness: 100
+              }}
+            >
+              <div className="hero__card-content">
+                <motion.h3 
+                  className="hero__card-title"
+                  initial={{ y: 10, opacity: 0 }}
+                  animate={porscheInView ? { y: 0, opacity: 1 } : { y: 10, opacity: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                >
+                  Especificaciones
+                </motion.h3>
+                <div className="hero__card-specs">
+                  {[
+                    { label: "Motor", value: "4.6L V8 + Híbrido" },
+                    { label: "Potencia", value: "887 HP" },
+                    { label: "0-100 km/h", value: "2.6 seg" },
+                    { label: "Año", value: "2013-2015" }
+                  ].map((spec, index) => (
+                    <motion.div 
+                      key={spec.label}
+                      className="hero__spec"
+                      initial={{ x: 20, opacity: 0 }}
+                      animate={porscheInView ? { x: 0, opacity: 1 } : { x: 20, opacity: 0 }}
+                      transition={{ duration: 0.5, delay: 1 + (index * 0.1) }}
+                    >
+                      <span className="hero__spec-label">{spec.label}</span>
+                      <span className="hero__spec-value">{spec.value}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+           
+          {/* Galería de imágenes Porsche */}
+          <div className="hero__gallery" ref={porscheGalleryRef}>
+            <ChevronLeft size={55} color='black' className="hero__gallery-arrow hero__gallery-arrow--left" />
+                       
+            <div className="hero__gallery-images">
+              <img src="/images/car2view2.png" alt="Porsche 918 Spyder view 2" className="hero__gallery-image" />
+              <img src="/images/car2mini.png" alt="Porsche 918 Spyder view 1" className="hero__gallery-image" />
+              <img src="/images/car2view3.png" alt="Porsche 918 Spyder view 3" className="hero__gallery-image" />
             </div>
                        
             <ChevronRight size={55} color='black' className="hero__gallery-arrow hero__gallery-arrow--right" />
