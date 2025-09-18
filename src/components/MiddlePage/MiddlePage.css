@@ -1,0 +1,402 @@
+/* Importar fuente Lexend */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap');
+
+.middle-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  overflow: hidden;
+  font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Fondo estático con degradado radial */
+.middle-page__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, 
+    #000000 0%, 
+    #202020 86%, 
+    #1f1f1f 100%);
+  z-index: 1;
+}
+
+/* Overlay para crear efecto de transición visual hacia la sección oscura */
+.middle-page__dark-overlay {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(ellipse at center, 
+    rgba(0, 0, 0, 0.3) 0%, 
+    rgba(0, 0, 0, 0.6) 60%, 
+    rgba(0, 0, 0, 0.8) 100%);
+  z-index: 2;
+  pointer-events: none;
+  filter: blur(10px);
+}
+
+.middle-page__container {
+  max-width: 1600px;
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.middle-page__content {
+  align-self: flex-start;
+  max-width: 600px;
+  z-index: 4;
+  margin-top: 10vh;
+  margin-left: 2rem;
+}
+
+/* Título principal */
+.middle-page__title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #e5e5e5 50%, #cccccc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+/* Subtítulo */
+.middle-page__subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 1.6;
+  color: #cccccc;
+  margin-bottom: 3rem;
+  text-align: left;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* Contenedor del buscador */
+.middle-page__search-container {
+  width: 100%;
+  max-width: 500px;
+}
+
+.middle-page__search-form {
+  width: 100%;
+}
+
+.middle-page__search-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 0.75rem 1.25rem;
+.middle-page__search-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.middle-page__search-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.middle-page__search-wrapper:hover::before {
+  left: 100%;
+}
+
+.middle-page__search-wrapper--focused {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 50px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Input del buscador */
+.middle-page__search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: 'Lexend', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.5rem 0;
+  margin-right: 1rem;
+}
+
+.middle-page__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+.middle-page__search-input:focus::placeholder {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* Botón del buscador */
+.middle-page__search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.middle-page__search-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.middle-page__search-button:active {
+  transform: scale(0.98);
+}
+
+.middle-page__search-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.middle-page__search-button:disabled:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Contenedor de imagen - posicionada en la esquina inferior derecha */
+.middle-page__image-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 60%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.middle-page__image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom right;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+
+.middle-page__image:hover {
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.6)) brightness(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .middle-page__container {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .middle-page {
+    padding: 2rem 1rem;
+    min-height: auto;
+  }
+  
+  .middle-page__container {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+  
+  .middle-page__content {
+    max-width: 100%;
+    margin-top: 5vh;
+    margin-left: 0;
+    text-align: center;
+    align-self: center;
+  }
+  
+  .middle-page__title {
+    margin-bottom: 1.5rem;
+  }
+  
+  .middle-page__subtitle {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .middle-page__image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    bottom: auto;
+    right: auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+  .middle-page__image {
+    width: 90%;
+    object-position: center;
+  }
+  
+  .middle-page__search-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .middle-page {
+    padding: 2rem 1rem;
+  }
+  
+  .middle-page__content {
+    margin-top: 3vh;
+  }
+  
+  .middle-page__search-wrapper {
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+  }
+  
+  .middle-page__search-input {
+    font-size: 0.9rem;
+    margin-right: 0.75rem;
+  }
+  
+  .middle-page__search-button {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .middle-page__container {
+    gap: 1.5rem;
+  }
+}
+
+/* Estados de focus para accesibilidad */
+.middle-page__search-input:focus-visible,
+.middle-page__search-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Optimizaciones de performance */
+.middle-page__background,
+.middle-page__background-parallax,
+.middle-page__image,
+.middle-page__search-wrapper {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Animaciones adicionales para scroll suave */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  .middle-page__title,
+  .middle-page__subtitle,
+  .middle-page__search-container {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .middle-page__subtitle {
+    animation-delay: 0.2s;
+  }
+  
+  .middle-page__search-container {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efectos adicionales de interacción */
+.middle-page__search-wrapper:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.08);
+}
+
+/* Efectos de brillo sutil en el título */
+.middle-page__title {
+  position: relative;
+}
+
+.middle-page__title::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.middle-page__title:hover::after {
+  opacity: 1;
+}
+}

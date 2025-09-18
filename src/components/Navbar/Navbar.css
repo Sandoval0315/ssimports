@@ -360,3 +360,149 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Estilos adicionales para el navbar oscuro - Agregar al final de NavClient.css */
+
+/* Transición suave para el cambio de tema */
+.navbar {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado oscuro del navbar */
+.navbar--dark {
+  background: linear-gradient( #202020 );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar--dark.navbar--scrolled {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Logo en modo oscuro */
+.navbar--dark .navbar__logo-img {
+  filter: brightness(1.2) contrast(1.1);
+}
+
+/* Enlaces de navegación en modo oscuro */
+.navbar--dark .navbar__nav-item {
+  color: #e5e7eb;
+}
+
+.navbar--dark .navbar__nav-item::after {
+  background: #ffffff;
+}
+
+.navbar--dark .navbar__nav-item:hover {
+  color: #ffffff;
+}
+
+/* Buscador en modo oscuro */
+.navbar--dark .navbar__search-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.navbar--dark .navbar__search-input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.navbar--dark .navbar__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.navbar--dark .navbar__search-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar--dark .navbar__search-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* Mobile toggle en modo oscuro */
+.navbar--dark .navbar__mobile-toggle {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navbar--dark .navbar__mobile-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.navbar--dark .navbar__hamburger {
+  background: #ffffff;
+}
+
+/* Menú móvil en modo oscuro */
+.navbar--dark .navbar__mobile-menu {
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar--dark .navbar__mobile-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+}
+
+.navbar--dark .navbar__mobile-close {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.navbar--dark .navbar__mobile-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.navbar--dark .navbar__mobile-item {
+  color: #e5e7eb;
+  border-left-color: transparent;
+}
+
+.navbar--dark .navbar__mobile-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-left-color: #ffffff;
+}
+
+.navbar--dark .navbar__mobile-search {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar--dark .navbar__mobile-search-input {
+  color: #ffffff;
+}
+
+.navbar--dark .navbar__mobile-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Transiciones suaves para todos los elementos */
+.navbar__nav-item,
+.navbar__search-input,
+.navbar__search-btn,
+.navbar__mobile-toggle,
+.navbar__hamburger,
+.navbar__mobile-menu,
+.navbar__mobile-item,
+.navbar__mobile-close,
+.navbar__mobile-search {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estados de focus en modo oscuro */
+.navbar--dark .navbar__nav-item:focus-visible,
+.navbar--dark .navbar__search-btn:focus-visible,
+.navbar--dark .navbar__mobile-toggle:focus-visible,
+.navbar--dark .navbar__mobile-close:focus-visible,
+.navbar--dark .navbar__mobile-item:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
