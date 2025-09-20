@@ -47,6 +47,26 @@ const Navbar = () => {
     );
   }, []);
 
+  // Smooth scroll handler
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      const navbar = navRef.current;
+      const navbarHeight = navbar ? navbar.offsetHeight : 0;
+      const targetPosition = targetElement.offsetTop - navbarHeight - 20;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Close mobile menu if open
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   // Toggle search
   const toggleSearch = () => {
     if (!isSearchOpen) {
@@ -105,19 +125,19 @@ const Navbar = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-              {/* Logo 
             <img 
-              src="" 
+              src="/images/logo.png" 
+              alt="Logo" 
               className="navbar__logo-img"
             />
-            */}
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="navbar__nav-desktop">
             <motion.a 
-              href="/" 
+              href="#hero" 
               className="navbar__nav-item"
+              onClick={(e) => handleSmoothScroll(e, 'hero')}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -125,8 +145,9 @@ const Navbar = () => {
             </motion.a>
 
             <motion.a 
-              href="/catalogo" 
+              href="#middle" 
               className="navbar__nav-item"
+              onClick={(e) => handleSmoothScroll(e, 'middle')}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -134,8 +155,9 @@ const Navbar = () => {
             </motion.a>
 
             <motion.a 
-              href="/about" 
+              href="#about" 
               className="navbar__nav-item"
+              onClick={(e) => handleSmoothScroll(e, 'about')}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -143,8 +165,9 @@ const Navbar = () => {
             </motion.a>
 
             <motion.a 
-              href="/contact" 
+              href="#contact"
               className="navbar__nav-item"
+              onClick={(e) => handleSmoothScroll(e, 'contact')}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -179,22 +202,6 @@ const Navbar = () => {
                 <MagnifyingGlass size={18} weight="bold" />
               </motion.button>
             </div>
-
-            {/* Logo */}
-            <motion.div 
-              ref={logoRef}
-              className="navbar__logo"
-              onMouseEnter={() => handleLogoHover(true)}
-              onMouseLeave={() => handleLogoHover(false)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <img 
-                src="/images/logo.png" 
-                alt="Logo" 
-                className="navbar__logo-img"
-              />
-            </motion.div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -240,16 +247,32 @@ const Navbar = () => {
               </div>
               
               <div className="navbar__mobile-nav">
-                <a href="/" className="navbar__mobile-item" onClick={() => setIsMobileMenuOpen(false)}>
+                <a 
+                  href="#hero" 
+                  className="navbar__mobile-item" 
+                  onClick={(e) => handleSmoothScroll(e, 'hero')}
+                >
                   Welcome
                 </a>
-                <a href="/catalogo" className="navbar__mobile-item" onClick={() => setIsMobileMenuOpen(false)}>
+                <a 
+                  href="#middle" 
+                  className="navbar__mobile-item" 
+                  onClick={(e) => handleSmoothScroll(e, 'middle')}
+                >
                   Catalogue
                 </a>
-                <a href="/about" className="navbar__mobile-item" onClick={() => setIsMobileMenuOpen(false)}>
+                <a 
+                  href="#about" 
+                  className="navbar__mobile-item" 
+                  onClick={(e) => handleSmoothScroll(e, 'about')}
+                >
                   About Us
                 </a>
-                <a href="/contact" className="navbar__mobile-item" onClick={() => setIsMobileMenuOpen(false)}>
+                <a 
+                  href="#contact" 
+                  className="navbar__mobile-item" 
+                  onClick={(e) => handleSmoothScroll(e, 'contact')}
+                >
                   Contact Us
                 </a>
                 
