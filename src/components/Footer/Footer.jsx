@@ -20,6 +20,24 @@ const Footer = () => {
     }
   };
 
+  // Función de navegación suave (igual que en Navbar)
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Obtener la altura del navbar si existe
+      const navbar = document.querySelector('.navbar');
+      const navbarHeight = navbar ? navbar.offsetHeight : 0;
+      const targetPosition = targetElement.offsetTop - navbarHeight - 20;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   useEffect(() => {
     // Cargar ScrollTrigger dinámicamente para evitar errores de Astro
     const loadScrollTrigger = async () => {
@@ -48,6 +66,7 @@ const Footer = () => {
           tl.fromTo(
             contactRef.current,
             { opacity: 0, x: -30 },
+            { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' },
             "-=0.7"
           );
 
@@ -194,13 +213,44 @@ const Footer = () => {
         </div>
                  
         <div className="footer__nav">
-          <a href="/" className="footer__nav-link" ref={addToNavLinksRef}>Welcome</a>
+          <a 
+            href="#hero" 
+            className="footer__nav-link" 
+            ref={addToNavLinksRef}
+            onClick={(e) => handleSmoothScroll(e, 'hero')}
+          >
+            Welcome
+          </a>
           <span className="footer__nav-separator">/</span>
-          <a href="/catalogo" className="footer__nav-link" ref={addToNavLinksRef}>Catalogue</a>
+          
+          <a 
+            href="#middle" 
+            className="footer__nav-link" 
+            ref={addToNavLinksRef}
+            onClick={(e) => handleSmoothScroll(e, 'middle')}
+          >
+            Catalogue
+          </a>
           <span className="footer__nav-separator">/</span>
-          <a href="/about" className="footer__nav-link" ref={addToNavLinksRef}>About Us</a>
+          
+          <a 
+            href="#about" 
+            className="footer__nav-link" 
+            ref={addToNavLinksRef}
+            onClick={(e) => handleSmoothScroll(e, 'about')}
+          >
+            About Us
+          </a>
           <span className="footer__nav-separator">/</span>
-          <a href="/contact" className="footer__nav-link" ref={addToNavLinksRef}>Contact Us</a>
+          
+          <a 
+            href="#contact" 
+            className="footer__nav-link" 
+            ref={addToNavLinksRef}
+            onClick={(e) => handleSmoothScroll(e, 'contact')}
+          >
+            Contact Us
+          </a>
         </div>
       </div>
 

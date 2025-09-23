@@ -289,7 +289,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="contact" ref={contactRef}>
-      {/* Cursor personalizado */}
       <div 
         className="contact__cursor" 
         ref={cursorRef}

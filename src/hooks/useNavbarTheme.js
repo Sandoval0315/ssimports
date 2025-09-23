@@ -1,9 +1,9 @@
-// useNavbarTheme.js - Hook personalizado para manejar el tema del navbar
+// useNavbarTheme.js - Hook unificado para manejar el tema del navbar
+
 import { useEffect } from 'react';
 
-export const useNavbarTheme = () => {
+const useNavbarTheme = () => {
   useEffect(() => {
-    // Función para cambiar el tema del navbar
     const changeNavbarTheme = (isDark) => {
       const navbar = document.querySelector('.navbar');
       if (navbar) {
@@ -15,33 +15,64 @@ export const useNavbarTheme = () => {
       }
     };
 
-    // Crear el observer para detectar la sección middle-page
+    let darkSectionsVisible = new Set(); // Para trackear qué secciones oscuras están visibles
+    let lastScrollY = window.scrollY; // Para detectar dirección del scroll
+
     const observer = new IntersectionObserver(
       (entries) => {
+        const currentScrollY = window.scrollY;
+        const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+        lastScrollY = currentScrollY;
+
         entries.forEach((entry) => {
-          if (entry.target.classList.contains('middle-page')) {
-            // Si la sección middle-page está visible (más del 20%)
-            changeNavbarTheme(entry.isIntersecting && entry.intersectionRatio > 0.2);
+          const sectionClass = entry.target.className;
+          
+          // Identificar secciones oscuras
+          if (sectionClass.includes('middle-page') || sectionClass.includes('gif-section')) {
+            const sectionId = entry.target.className;
+            const rect = entry.target.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            
+            // Lógica mejorada que considera la dirección del scroll y posición exacta
+            const isTopVisible = rect.top < viewportHeight * 0.8; // Sección empieza a aparecer
+            const isBottomVisible = rect.bottom > viewportHeight * 0.2; // Sección aún no desaparece completamente
+            const isSectionActive = isTopVisible && isBottomVisible;
+            
+            // Detectar si estamos scrolleando hacia arriba desde la primera sección oscura
+            const isScrollingUpFromGifSection = scrollDirection === 'up' && 
+                                                sectionClass.includes('gif-section') && 
+                                                rect.top > 0;
+            
+            if (isSectionActive && !isScrollingUpFromGifSection) {
+              darkSectionsVisible.add(sectionId);
+            } else {
+              darkSectionsVisible.delete(sectionId);
+            }
+            
+            // Cambiar tema basado en si hay alguna sección oscura visible
+            changeNavbarTheme(darkSectionsVisible.size > 0);
           }
         });
       },
       {
-        // Configuración del observer
-        threshold: [0.2, 0.8], // Se activa cuando 20% o 80% está visible
-        rootMargin: '-10% 0px -10% 0px' // Margen para activar antes
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], // Todos los puntos posibles
+        rootMargin: '0px 0px 0px 0px' // Sin margen para mayor precisión
       }
     );
 
-    // Observar la sección middle-page
+    // Observar todas las secciones oscuras
     const middlePage = document.querySelector('.middle-page');
+    const gifSection = document.querySelector('.gif-section');
+    
     if (middlePage) {
       observer.observe(middlePage);
     }
+    if (gifSection) {
+      observer.observe(gifSection);
+    }
 
-    // Cleanup
     return () => {
       observer.disconnect();
-      // Limpiar el tema oscuro al desmontar
       const navbar = document.querySelector('.navbar');
       if (navbar) {
         navbar.classList.remove('navbar--dark');
@@ -49,3 +80,5 @@ export const useNavbarTheme = () => {
     };
   }, []);
 };
+
+export default useNavbarTheme;

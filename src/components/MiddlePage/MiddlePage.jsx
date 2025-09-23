@@ -3,54 +3,11 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { gsap } from 'gsap/dist/gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { MagnifyingGlass } from 'phosphor-react';
+import useNavbarTheme from '../../hooks/useNavbarTheme'; // Importar el hook unificado
 import './MiddlePage.css';
 
 // Registrar ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
-
-// Hook para manejar el tema del navbar
-const useNavbarTheme = () => {
-  useEffect(() => {
-    const changeNavbarTheme = (isDark) => {
-      const navbar = document.querySelector('.navbar');
-      if (navbar) {
-        if (isDark) {
-          navbar.classList.add('navbar--dark');
-        } else {
-          navbar.classList.remove('navbar--dark');
-        }
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target.classList.contains('middle-page')) {
-            // Solo cambiar cuando la sección esté más del 60% visible
-            changeNavbarTheme(entry.isIntersecting && entry.intersectionRatio > 0.6);
-          }
-        });
-      },
-      {
-        threshold: [0.6, 0.8], // Se activa cuando 60% o 80% está visible
-        rootMargin: '0px 0px 0px 0px' // Sin margen adicional
-      }
-    );
-
-    const middlePage = document.querySelector('.middle-page');
-    if (middlePage) {
-      observer.observe(middlePage);
-    }
-
-    return () => {
-      observer.disconnect();
-      const navbar = document.querySelector('.navbar');
-      if (navbar) {
-        navbar.classList.remove('navbar--dark');
-      }
-    };
-  }, []);
-};
 
 const MiddlePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -76,10 +33,7 @@ const MiddlePage = () => {
   // Para detectar si está en vista
   const isInView = useInView(middleRef, { once: true, amount: 0.3 });
 
-  // Usar el hook para cambiar el tema del navbar
-  useNavbarTheme();
-
-  // Usar el hook para cambiar el tema del navbar
+  // Usar el hook unificado para cambiar el tema del navbar
   useNavbarTheme();
 
   useEffect(() => {
@@ -316,4 +270,4 @@ const MiddlePage = () => {
   );
 };
 
-export default MiddlePage; 
+export default MiddlePage;

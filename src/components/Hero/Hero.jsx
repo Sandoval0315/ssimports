@@ -144,7 +144,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="hero" ref={heroRef}>
+    <section id="hero" className="hero" ref={heroRef}>
       <div className="hero__content">
         {/* Ferrari 288 GTO Section */}
         <div className='hero__car-section hero__ferrari' ref={ferrari288Ref}>
