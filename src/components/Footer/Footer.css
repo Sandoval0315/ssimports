@@ -113,13 +113,12 @@
 .footer__big-text {
   font-family: 'Lexend', sans-serif;
   font-weight: 600;
-  font-size: clamp(12rem, 55vw, 60rem);
+  font-size: clamp(12rem, 47vw, 60rem);
   color: #000000;
   opacity: 1;
   user-select: none;
   line-height: 0.8;
   letter-spacing: -0em;
-  text-align: center;
   position: relative;
   width: 100%;
   display: block;
